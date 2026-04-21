@@ -69,6 +69,47 @@ public class Sort
 	private static <T extends Comparable<T>> void quicksort(IndexedUnsortedList<T> list)
 	{
 		// TODO: Implement recursive quicksort algorithm 
+		
+		
+		// seed is if list size < 2
+		if (list.size() < 2) {
+			return;
+		}
+
+		// select pivot element - check 3 Els and choose middle
+		T pivot = list.first(); // he said its fine to use any element, even though first isn't the best
+		list.removeFirst();
+		
+
+		IndexedUnsortedList<T> lt = newList();
+		IndexedUnsortedList<T> gt = newList();
+
+
+		while(!list.isEmpty()) {
+			T currEl = list.removeFirst();
+
+			if (currEl.compareTo(pivot) < 0) {
+				lt.add(currEl);
+			}
+			else {
+				gt.add(currEl);
+			}
+		}
+
+		// Recursively call quicksort
+		quicksort(lt);
+		quicksort(gt);
+
+		// merge lists
+		while (!lt.isEmpty()) { // merge less than list, which is already sorted itself
+			list.add(lt.removeFirst());
+		}
+
+		list.add(pivot); // adds pivot back in after the smaller items but before all the larger ones
+
+		while (!gt.isEmpty()) { // same with the greater than
+			list.add(gt.removeFirst());
+		}
 	}
 		
 	/**
@@ -87,6 +128,46 @@ public class Sort
 	private static <T> void quicksort(IndexedUnsortedList<T> list, Comparator<T> c)
 	{
 		// TODO: Implement recursive quicksort algorithm using Comparator
+
+		// seed is if list size < 2
+		if (list.size() < 2) {
+			return;
+		}
+
+		// select pivot element - check 3 Els and choose middle
+		T pivot = list.first(); // he said its fine to use any element, even though first isn't the best
+		list.removeFirst();
+		
+
+		IndexedUnsortedList<T> lt = newList();
+		IndexedUnsortedList<T> gt = newList();
+
+
+		while(!list.isEmpty()) {
+			T currEl = list.removeFirst();
+
+			if (c.compare(currEl, pivot) < 0) {
+				lt.add(currEl);
+			}
+			else {
+				gt.add(currEl);
+			}
+		}
+
+		// Recursively call quicksort
+		quicksort(lt, c);
+		quicksort(gt, c);
+
+		// merge lists
+		while (!lt.isEmpty()) {
+			list.add(lt.removeFirst());
+		}
+
+		list.add(pivot); // adds pivot back in after the smaller items but before all the larger ones
+
+		while (!gt.isEmpty()) {
+			list.add(gt.removeFirst());
+		}
 
 	}
 	
