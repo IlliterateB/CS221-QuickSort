@@ -18,7 +18,7 @@ public class Sort
 	 */
 	private static <T> IndexedUnsortedList<T> newList() 
 	{
-		return new WrappedDLL<T>(); //TODO: replace with your IUDoubleLinkedList for extra-credit
+		return new IUDoubleLinkedList<T>(); // replaced with IUDoubleLinkedList for extra-credit
 	}
 	
 	/**
@@ -68,8 +68,6 @@ public class Sort
 	 */
 	private static <T extends Comparable<T>> void quicksort(IndexedUnsortedList<T> list)
 	{
-		// TODO: Implement recursive quicksort algorithm 
-		
 		
 		// seed is if list size < 2
 		if (list.size() < 2) {
@@ -77,18 +75,19 @@ public class Sort
 		}
 
 		// select pivot element - check 3 Els and choose middle
+		// this would likely require many many conditional statements to select the middle value
 		T pivot = list.first(); // he said its fine to use any element, even though first isn't the best
 		list.removeFirst();
 		
 
-		IndexedUnsortedList<T> lt = newList();
-		IndexedUnsortedList<T> gt = newList();
+		IndexedUnsortedList<T> lt = newList(); // less than pivot
+		IndexedUnsortedList<T> gt = newList(); // greater than pivot
 
-
+		// loops through rest of list to compare to pivot
 		while(!list.isEmpty()) {
 			T currEl = list.removeFirst();
 
-			if (currEl.compareTo(pivot) < 0) {
+			if (currEl.compareTo(pivot) < 0) { // compareTo() is negative for less than, == 0 for equal, and > 0 for greater than pivot
 				lt.add(currEl);
 			}
 			else {
@@ -99,6 +98,7 @@ public class Sort
 		// Recursively call quicksort
 		quicksort(lt);
 		quicksort(gt);
+
 
 		// merge lists
 		while (!lt.isEmpty()) { // merge less than list, which is already sorted itself
@@ -127,22 +127,22 @@ public class Sort
 	 */
 	private static <T> void quicksort(IndexedUnsortedList<T> list, Comparator<T> c)
 	{
-		// TODO: Implement recursive quicksort algorithm using Comparator
+		// This is basically the same, just has Comparator param in the recursive calls, and uses c.compare() rather than compareTo()
 
 		// seed is if list size < 2
 		if (list.size() < 2) {
 			return;
 		}
 
-		// select pivot element - check 3 Els and choose middle
-		T pivot = list.first(); // he said its fine to use any element, even though first isn't the best
+		// select pivot element e
+		T pivot = list.first(); 
 		list.removeFirst();
 		
 
 		IndexedUnsortedList<T> lt = newList();
 		IndexedUnsortedList<T> gt = newList();
 
-
+		// loop through and compare each El
 		while(!list.isEmpty()) {
 			T currEl = list.removeFirst();
 
@@ -154,7 +154,7 @@ public class Sort
 			}
 		}
 
-		// Recursively call quicksort
+		// Recursively call quicksort with same comparator as first call, == c
 		quicksort(lt, c);
 		quicksort(gt, c);
 

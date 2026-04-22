@@ -89,7 +89,7 @@ public class SortTester {
 	 * @return [ ]
 	 */
 	private static IndexedUnsortedList<Integer> newList() {	//TODO: specify the underlying list class, here
-		return new WrappedDLL<Integer>(); // TODO change to IUDoubleLinkedList
+		return new IUDoubleLinkedList<Integer>(); // changed to IUDoubleLinkedList from WrappedDLL
 	}
 	
 	/** @return [A] */
